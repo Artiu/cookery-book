@@ -7,15 +7,13 @@ import {
     Input,
     InputGroup,
     InputRightElement,
-    RequiredIndicator,
     Textarea,
 } from "@chakra-ui/react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import IngredientList from "./IngredientList";
 import StepList from "./StepList";
 
 const initialState = {
-    image: "",
     title: "",
     description: "",
     ingredients: [],
@@ -27,7 +25,6 @@ export default function RecipeForm({ initialData, onSubmit }) {
     const [formData, setFormData] = useState(
         initialData ? { ...initialState, ...initialData } : initialState
     );
-    const [invalidFields, setInvalidFields] = useState([]);
     const [ingredient, setIngredient] = useState("");
     const [step, setStep] = useState("");
 
@@ -46,15 +43,27 @@ export default function RecipeForm({ initialData, onSubmit }) {
     };
     const handleSubmit = (e) => {
         e.preventDefault();
-        onSubmit(formData);
+        if (isFieldsValid()) {
+            if (selectedFile) {
+                onSubmit({ ...formData, file: selectedFile, withPhoto: Boolean(imagePreview) });
+            } else {
+                onSubmit(formData);
+            }
+        }
     };
 
     const [imagePreview, setImagePreview] = useState(null);
     const [selectedFile, setSelectedFile] = useState(null);
+    const fileInputRef = useRef();
 
     const handleChangeImage = (e) => {
         const [file] = e.target.files;
         setSelectedFile(file);
+    };
+    const removeImage = () => {
+        setImagePreview(null);
+        setSelectedFile(null);
+        fileInputRef.current.value = "";
     };
     useEffect(() => {
         if (!selectedFile) {
@@ -77,11 +86,18 @@ export default function RecipeForm({ initialData, onSubmit }) {
                         required={false}
                     />
                 </FormControl>
-                {imagePreview ? (
-                    <Image src={imagePreview} />
-                ) : (
-                    <Input type="file" onChange={handleChangeImage} accept="image/*" />
-                )}
+                {imagePreview && <Image src={imagePreview} alt="Obraz potrawy" />}
+                <Input
+                    type="file"
+                    onChange={handleChangeImage}
+                    accept="image/*"
+                    hidden={true}
+                    ref={fileInputRef}
+                />
+                <Button onClick={() => fileInputRef.current.click()}>
+                    {imagePreview ? "Zmień" : "Dodaj"} zdjęcie
+                </Button>
+                {imagePreview && <Button onClick={removeImage}>Usuń zdjęcie</Button>}
                 <FormControl>
                     <FormLabel>Opis</FormLabel>
                     <Textarea
@@ -90,7 +106,7 @@ export default function RecipeForm({ initialData, onSubmit }) {
                         onChange={handleChange}
                     />
                 </FormControl>
-                <FormControl isInvalid={invalidFields.includes("ingredients")} isRequired>
+                <FormControl isInvalid={false} isRequired>
                     <FormLabel>Składniki</FormLabel>
                     <InputGroup>
                         <Input
@@ -106,7 +122,7 @@ export default function RecipeForm({ initialData, onSubmit }) {
                     </InputGroup>
                     <IngredientList ingredients={formData.ingredients} />
                 </FormControl>
-                <FormControl isInvalid={invalidFields.includes("steps")} isRequired>
+                <FormControl isInvalid={false} isRequired>
                     <FormLabel>Kroki</FormLabel>
                     <InputGroup>
                         <Input
