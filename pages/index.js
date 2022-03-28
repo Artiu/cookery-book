@@ -1,4 +1,5 @@
 import { Button, Input } from "@chakra-ui/react";
+import { useAuth } from "features/auth/context";
 import RecipeList from "features/recipe/list/ui";
 import useSearchRecipe from "features/recipe/search/hooks/useSearchRecipe";
 import { collection, getDocs } from "firebase/firestore";
@@ -9,14 +10,17 @@ import Link from "next/link";
 
 export default function Home({ recipes }) {
     const { query, setQuery, filteredList } = useSearchRecipe(recipes);
+    const { isLoggedIn } = useAuth();
     return (
         <>
             <Head>
                 <title>Przepisy Madzi</title>
             </Head>
-            <Link href="/add" passHref>
-                <Button as="a">Dodaj przepis</Button>
-            </Link>
+            {isLoggedIn && (
+                <Link href="/add" passHref>
+                    <Button as="a">Dodaj przepis</Button>
+                </Link>
+            )}
             <Input value={query} onChange={(e) => setQuery(e.target.value)} />
             <RecipeList recipes={filteredList} />
         </>

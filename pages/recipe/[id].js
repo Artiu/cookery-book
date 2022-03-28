@@ -1,4 +1,5 @@
 import { Button, useBoolean } from "@chakra-ui/react";
+import { useAuth } from "features/auth/context";
 import FullCard from "features/recipe/card/ui/FullCard";
 import EditForm from "features/recipe/edit/ui/Form";
 import { doc, getDoc } from "firebase/firestore";
@@ -9,13 +10,14 @@ import BackButton from "shared/ui/BackButton";
 
 export default function RecipePage({ recipe }) {
     const [isEditing, setIsEditing] = useBoolean();
+    const { isLoggedIn } = useAuth();
     return (
         <>
             <Head>
                 <title>{recipe.title}</title>
             </Head>
             <BackButton />
-            <Button onClick={() => setIsEditing.toggle()}>Edytuj</Button>
+            {isLoggedIn && <Button onClick={() => setIsEditing.toggle()}>Edytuj</Button>}
             {isEditing ? (
                 <EditForm initialData={recipe} cancel={setIsEditing.off} />
             ) : (
