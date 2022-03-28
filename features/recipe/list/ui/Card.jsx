@@ -1,4 +1,4 @@
-import { AspectRatio, Box, Button, Heading, Image, Link, Text } from "@chakra-ui/react";
+import { Box, Button, Heading, Image, Link, Text } from "@chakra-ui/react";
 import NextLink from "next/link";
 
 export default function RecipeCard({ data }) {

@@ -1,5 +1,6 @@
-import { Button } from "@chakra-ui/react";
+import { Button, Input } from "@chakra-ui/react";
 import RecipeList from "features/recipe/list/ui";
+import useSearchRecipe from "features/recipe/search/hooks/useSearchRecipe";
 import { collection, getDocs } from "firebase/firestore";
 import { getDownloadURL, ref } from "firebase/storage";
 import { firestore, storage } from "init/firebase";
@@ -7,6 +8,7 @@ import Head from "next/head";
 import Link from "next/link";
 
 export default function Home({ recipes }) {
+    const { query, setQuery, filteredList } = useSearchRecipe(recipes);
     return (
         <>
             <Head>
@@ -15,7 +17,8 @@ export default function Home({ recipes }) {
             <Link href="/add" passHref>
                 <Button as="a">Dodaj przepis</Button>
             </Link>
-            <RecipeList recipes={recipes} />
+            <Input value={query} onChange={(e) => setQuery(e.target.value)} />
+            <RecipeList recipes={filteredList} />
         </>
     );
 }
