@@ -1,6 +1,6 @@
 import { Button, useBoolean } from "@chakra-ui/react";
+import FullCard from "features/recipe/card/ui/FullCard";
 import EditForm from "features/recipe/edit/ui/Form";
-import RecipeCard from "features/recipe/list/ui/Card";
 import { doc, getDoc } from "firebase/firestore";
 import { getDownloadURL, ref } from "firebase/storage";
 import { firestore, storage } from "init/firebase";
@@ -19,7 +19,7 @@ export default function RecipePage({ recipe }) {
             {isEditing ? (
                 <EditForm initialData={recipe} cancel={setIsEditing.off} />
             ) : (
-                <RecipeCard data={recipe} />
+                <FullCard data={recipe} />
             )}
         </>
     );
