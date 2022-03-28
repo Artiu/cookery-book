@@ -9,12 +9,12 @@ export default function AddRecipeForm() {
     const router = useRouter();
     const toast = useToast();
     const addRecipe = async (data) => {
-        const file = data.file;
-        delete data.file;
+        const image = data.image;
+        delete data.image;
         try {
             const docRef = await addDoc(collection(firestore, "recipes"), data);
-            if (file) {
-                await uploadBytes(ref(storage, `images/${docRef.id}`), file);
+            if (image) {
+                await uploadBytes(ref(storage, `images/${docRef.id}`), image);
             }
             toast({
                 position: "top",
@@ -22,7 +22,7 @@ export default function AddRecipeForm() {
                 description: "Pomyślnie dodano nowy przepis!",
                 isClosable: true,
             });
-            router.push("/");
+            router.push(`/recipe/${docRef.id}`);
         } catch {
             toast({
                 position: "top",

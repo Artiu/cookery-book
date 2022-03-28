@@ -1,8 +1,9 @@
-export const handler = async (req, res) => {
+const handler = async (req, res) => {
     try {
-        await res.unstable_revalidate(req.body.path);
+        await res.unstable_revalidate(JSON.parse(req.body).path);
         res.json({ revalidated: true });
-    } catch {
+    } catch (err) {
         res.json({ revalidated: false });
     }
 };
+export default handler;

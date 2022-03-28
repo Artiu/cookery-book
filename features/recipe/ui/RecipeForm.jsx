@@ -27,6 +27,7 @@ export default function RecipeForm({ initialData, onSubmit }) {
     );
     const [ingredient, setIngredient] = useState("");
     const [step, setStep] = useState("");
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -41,18 +42,24 @@ export default function RecipeForm({ initialData, onSubmit }) {
         }
         return true;
     };
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         if (isFieldsValid()) {
+            setIsSubmitting(true);
             if (selectedFile) {
-                onSubmit({ ...formData, file: selectedFile, withPhoto: Boolean(imagePreview) });
+                await onSubmit({
+                    ...formData,
+                    image: selectedFile,
+                    withImage: Boolean(imagePreview),
+                });
             } else {
-                onSubmit(formData);
+                await onSubmit({ ...formData, withImage: Boolean(imagePreview) });
             }
+            setIsSubmitting(false);
         }
     };
 
-    const [imagePreview, setImagePreview] = useState(null);
+    const [imagePreview, setImagePreview] = useState(initialData?.image);
     const [selectedFile, setSelectedFile] = useState(null);
     const fileInputRef = useRef();
 
@@ -144,7 +151,7 @@ export default function RecipeForm({ initialData, onSubmit }) {
                         onChange={handleChange}
                     />
                 </FormControl>
-                <Button type="submit" disabled={!isFieldsValid()}>
+                <Button type="submit" disabled={!isFieldsValid()} isLoading={isSubmitting}>
                     Zapisz
                 </Button>
             </Container>
