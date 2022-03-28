@@ -32,5 +32,5 @@ export default function AddRecipeForm() {
             });
         }
     };
-    return <RecipeForm onSubmit={addRecipe} />;
+    return <RecipeForm cancel={() => router.back()} onSubmit={addRecipe} />;
 }

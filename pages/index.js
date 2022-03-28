@@ -1,12 +1,23 @@
-import RecipeCard from "features/recipe/ui/Card";
+import { Button } from "@chakra-ui/react";
+import RecipeList from "features/recipe/list/ui";
 import { collection, getDocs, limit } from "firebase/firestore";
 import { getDownloadURL, ref } from "firebase/storage";
 import { firestore, storage } from "init/firebase";
+import Head from "next/head";
+import Link from "next/link";
 
 export default function Home({ recipes }) {
-    return recipes.map((recipe, index) => {
-        return <RecipeCard data={recipe} key={index} />;
-    });
+    return (
+        <>
+            <Head>
+                <title>Przepisy Madzi</title>
+            </Head>
+            <Link href="/add" passHref>
+                <Button as="a">Dodaj przepis</Button>
+            </Link>
+            <RecipeList recipes={recipes} />
+        </>
+    );
 }
 
 export async function getStaticProps() {

@@ -5,16 +5,15 @@ import { firestore, storage } from "init/firebase";
 import { useRouter } from "next/router";
 import { revalidate } from "shared/revalidate";
 
-export default function EditForm({ initialData }) {
+export default function EditForm({ cancel, initialData }) {
     const router = useRouter();
     const editData = async (newData) => {
-        console.log(newData);
         delete newData.id;
         const refToOldData = doc(firestore, "recipes", initialData.id);
         if (!newData.withImage) {
             await deleteObject(ref(storage, `images/${initialData.id}`));
         }
-        if (newData.image) {
+        if (newData.image && typeof newData.image === "object") {
             await uploadBytes(ref(storage, `images/${initialData.id}`), newData.image);
         }
         delete newData.image;
@@ -23,5 +22,5 @@ export default function EditForm({ initialData }) {
         await revalidate("/");
         router.reload();
     };
-    return <RecipeForm initialData={initialData} onSubmit={editData} />;
+    return <RecipeForm initialData={initialData} cancel={cancel} onSubmit={editData} />;
 }

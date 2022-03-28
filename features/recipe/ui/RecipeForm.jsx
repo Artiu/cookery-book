@@ -21,7 +21,7 @@ const initialState = {
     conclusion: "",
 };
 
-export default function RecipeForm({ initialData, onSubmit }) {
+export default function RecipeForm({ initialData, cancel, onSubmit }) {
     const [formData, setFormData] = useState(
         initialData ? { ...initialState, ...initialData } : initialState
     );
@@ -151,6 +151,7 @@ export default function RecipeForm({ initialData, onSubmit }) {
                         onChange={handleChange}
                     />
                 </FormControl>
+                <Button onClick={cancel}>Anuluj</Button>
                 <Button type="submit" disabled={!isFieldsValid()} isLoading={isSubmitting}>
                     Zapisz
                 </Button>
