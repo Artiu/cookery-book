@@ -17,9 +17,8 @@ const withoutAuth = (WrappedComponent) => {
 
         if (!isLoggedIn) {
             return <WrappedComponent {...props} />;
-        } else {
-            return null;
         }
+        return null;
     };
 };
 

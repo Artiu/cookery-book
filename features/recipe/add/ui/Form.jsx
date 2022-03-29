@@ -4,6 +4,7 @@ import { addDoc, collection } from "firebase/firestore";
 import { ref, uploadBytes } from "firebase/storage";
 import { firestore, storage } from "init/firebase";
 import { useRouter } from "next/router";
+import { revalidate } from "shared/revalidate";
 
 export default function AddRecipeForm() {
     const router = useRouter();
@@ -16,6 +17,7 @@ export default function AddRecipeForm() {
             if (image) {
                 await uploadBytes(ref(storage, `images/${docRef.id}`), image);
             }
+            await revalidate("/");
             toast({
                 position: "top",
                 status: "success",

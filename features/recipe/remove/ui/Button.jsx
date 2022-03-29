@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
     AlertDialog,
     AlertDialogBody,
@@ -16,12 +17,16 @@ import { revalidate } from "shared/revalidate";
 
 export default function RemoveButton({ recipe }) {
     const router = useRouter();
+    const [isRemoving, setIsRemoving] = useState(false);
     const removeRecipe = async () => {
+        setIsRemoving(true);
         await deleteDoc(doc(firestore, "recipes", recipe.id));
         if (recipe.withImage) {
             await deleteObject(ref(`images/${recipe.id}`));
         }
+        await revalidate(`/recipe/${recipe.id}`);
         await revalidate("/");
+        setIsRemoving(false);
         router.push("/");
     };
     const { isOpen, onOpen, onClose } = useDisclosure();
@@ -38,7 +43,12 @@ export default function RemoveButton({ recipe }) {
 
                         <AlertDialogFooter>
                             <Button onClick={onClose}>Anuluj</Button>
-                            <Button colorScheme="red" onClick={removeRecipe} ml={3}>
+                            <Button
+                                colorScheme="red"
+                                onClick={removeRecipe}
+                                ml={3}
+                                isLoading={isRemoving}
+                            >
                                 Usuń
                             </Button>
                         </AlertDialogFooter>

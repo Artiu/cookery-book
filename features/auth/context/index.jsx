@@ -1,6 +1,7 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "init/firebase";
+import { Center, Spinner } from "@chakra-ui/react";
 
 const AuthContext = createContext({ isLoggedIn: false });
 
@@ -16,7 +17,6 @@ export default function AuthContextProvider({ children }) {
         });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
-    if (isLoggedIn === null) return null;
 
     return <AuthContext.Provider value={{ isLoggedIn }}>{children}</AuthContext.Provider>;
 }
