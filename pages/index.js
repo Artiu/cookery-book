@@ -1,4 +1,4 @@
-import { Button, Input } from "@chakra-ui/react";
+import { Button, Container, Input } from "@chakra-ui/react";
 import { useAuth } from "features/auth/context";
 import RecipeList from "features/recipe/list/ui";
 import useSearchRecipe from "features/recipe/search/hooks/useSearchRecipe";
@@ -17,12 +17,14 @@ export default function Home({ recipes }) {
                 <title>Przepisy Madzi</title>
             </Head>
             {isLoggedIn && (
-                <Link href="/add" passHref>
+                <Link href="/recipe/add" passHref>
                     <Button as="a">Dodaj przepis</Button>
                 </Link>
             )}
             <Input value={query} onChange={(e) => setQuery(e.target.value)} />
-            <RecipeList recipes={filteredList} />
+            <Container maxW="container.xl">
+                <RecipeList recipes={filteredList} />
+            </Container>
         </>
     );
 }

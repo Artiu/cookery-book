@@ -1,6 +1,5 @@
 /* eslint-disable react/display-name */
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Center, Spinner } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { useAuth } from "../context";
@@ -18,13 +17,6 @@ const withAuth = (WrappedComponent, redirectTo = "/") => {
 
         if (isLoggedIn) {
             return <WrappedComponent {...props} />;
-        }
-        if (isLoggedIn === false) {
-            return (
-                <Center height="100vh">
-                    <Spinner size="xl" />
-                </Center>
-            );
         }
         return null;
     };

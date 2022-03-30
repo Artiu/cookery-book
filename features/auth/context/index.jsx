@@ -1,13 +1,14 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "init/firebase";
-import { Center, Spinner } from "@chakra-ui/react";
 
 const AuthContext = createContext({ isLoggedIn: false });
 
 export default function AuthContextProvider({ children }) {
-    const [isLoggedIn, setIsLoggedIn] = useState(null);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
     useEffect(() => {
+        const wasLoggedIn = localStorage.getItem("wasLoggedIn");
+        setIsLoggedIn(wasLoggedIn === "true");
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 setIsLoggedIn(true);
@@ -17,6 +18,10 @@ export default function AuthContextProvider({ children }) {
         });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
+    useEffect(() => {
+        localStorage.setItem("wasLoggedIn", String(isLoggedIn));
+    }, [isLoggedIn]);
 
     return <AuthContext.Provider value={{ isLoggedIn }}>{children}</AuthContext.Provider>;
 }
