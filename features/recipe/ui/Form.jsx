@@ -21,7 +21,7 @@ const initialState = {
     conclusion: "",
 };
 
-export default function RecipeForm({ initialData, cancel, onSubmit }) {
+export default function Form({ initialData, cancel, onSubmit }) {
     const [formData, setFormData] = useState(
         initialData ? { ...initialState, ...initialData } : initialState
     );

@@ -1,7 +1,7 @@
 import { Box, Button, Flex, Heading, Image, Text, useMediaQuery } from "@chakra-ui/react";
 import NextLink from "next/link";
 
-export default function RecipeCard({ data }) {
+export default function ShortCard({ data }) {
     const [isHigherThan1000] = useMediaQuery("(min-width: 1000px)");
     return (
         <Flex

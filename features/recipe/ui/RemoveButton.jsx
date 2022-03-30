@@ -14,18 +14,24 @@ import { deleteObject, ref } from "firebase/storage";
 import { firestore } from "init/firebase";
 import { useRouter } from "next/router";
 import { revalidate } from "shared/revalidate";
+import useMyToast from "shared/hooks/useMyToast";
 
 export default function RemoveButton({ recipe }) {
     const router = useRouter();
+    const toast = useMyToast();
     const [isRemoving, setIsRemoving] = useState(false);
     const removeRecipe = async () => {
         setIsRemoving(true);
-        await deleteDoc(doc(firestore, "recipes", recipe.id));
-        if (recipe.withImage) {
-            await deleteObject(ref(`images/${recipe.id}`));
+        try {
+            await deleteDoc(doc(firestore, "recipes", recipe.id));
+            if (recipe.withImage) {
+                await deleteObject(ref(`images/${recipe.id}`));
+            }
+            await revalidate(`/recipe/${recipe.id}`);
+            await revalidate("/");
+        } catch {
+            toast({ type: "error", description: "Coś poszło nie tak!" });
         }
-        await revalidate(`/recipe/${recipe.id}`);
-        await revalidate("/");
         setIsRemoving(false);
         router.push("/");
     };

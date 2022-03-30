@@ -1,7 +1,7 @@
 import { Button, Container, Input } from "@chakra-ui/react";
 import { useAuth } from "features/auth/context";
-import RecipeList from "features/recipe/list/ui";
-import useSearchRecipe from "features/recipe/search/hooks/useSearchRecipe";
+import RecipeList from "features/recipe/ui/List";
+import useSearchRecipe from "features/recipe/hooks/useSearchRecipe";
 import { collection, getDocs } from "firebase/firestore";
 import { getDownloadURL, ref } from "firebase/storage";
 import { firestore, storage } from "init/firebase";

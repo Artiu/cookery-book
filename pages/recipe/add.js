@@ -1,5 +1,5 @@
 import withAuth from "features/auth/HOC/withAuth";
-import AddRecipeForm from "features/recipe/add/ui/Form";
+import AddRecipeForm from "features/recipe/ui/AddForm";
 import Head from "next/head";
 
 function AddRecipePage() {
