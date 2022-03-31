@@ -90,7 +90,7 @@ export default function Form({ initialData, cancel, onSubmit }) {
     }, [selectedFile]);
     return (
         <form onSubmit={handleSubmit}>
-            <Container display="flex" flexDirection="column" gap="8px">
+            <Flex direction="column" gap="8px">
                 <FormControl isInvalid={false} isRequired>
                     <FormLabel>Nazwa przepisu</FormLabel>
                     <Input
@@ -164,7 +164,7 @@ export default function Form({ initialData, cancel, onSubmit }) {
                 <Button type="submit" disabled={!isFieldsValid()} isLoading={isSubmitting}>
                     Zapisz
                 </Button>
-            </Container>
+            </Flex>
         </form>
     );
 }

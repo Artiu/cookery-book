@@ -1,18 +1,25 @@
-import { Box, Heading, Image, Text } from "@chakra-ui/react";
+import { Box, Container, Flex, Heading, Image, Text } from "@chakra-ui/react";
 import IngredientList from "features/recipe/ui/IngredientList";
 import StepList from "features/recipe/ui/StepList";
 
 export default function FullCard({ data }) {
     return (
-        <Box shadow="md">
+        <Flex direction="column" gap="10px">
             {data.image && <Image src={data.image} alt={`${data.title} wygląd`} />}
-            <Heading>{data.title}</Heading>
-            {data.description && <Text>{data.description}</Text>}
-            Składniki:
+            <Heading as="h1" textAlign="center">
+                {data.title}
+            </Heading>
+            {data.description && <Text textAlign="justify">{data.description}</Text>}
+            <Heading fontSize="lg">Składniki:</Heading>
             <IngredientList ingredients={data.ingredients} />
-            Kroki:
+            <Heading fontSize="lg">Kroki:</Heading>
             <StepList steps={data.steps} />
-            {data.conclusion && <Text>{data.conclusion}</Text>}
-        </Box>
+            {data.conclusion && (
+                <>
+                    <Heading fontSize="lg">Podsumowanie</Heading>
+                    <Text textAlign="justify">{data.conclusion}</Text>
+                </>
+            )}
+        </Flex>
     );
 }

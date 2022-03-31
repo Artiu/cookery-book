@@ -11,7 +11,13 @@ function AddRecipePage() {
                 <title>Dodaj przepis</title>
             </Head>
             <EnterPageAnimation>
-                <Container paddingBottom="20px" marginBottom="30px" shadow="xl">
+                <Container
+                    maxW="container.md"
+                    paddingBottom="20px"
+                    marginTop="15px"
+                    marginBottom="30px"
+                    shadow="xl"
+                >
                     <Heading textAlign="center" paddingBlock="20px" as="h1">
                         Dodaj przepis
                     </Heading>

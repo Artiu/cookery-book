@@ -1,4 +1,4 @@
-import { Button, useBoolean } from "@chakra-ui/react";
+import { Box, Button, Container, Flex, useBoolean } from "@chakra-ui/react";
 import { useAuth } from "features/auth/context";
 import FullCard from "features/recipe/ui/FullCard";
 import EditForm from "features/recipe/ui/EditForm";
@@ -18,19 +18,31 @@ export default function RecipePage({ recipe }) {
             <Head>
                 <title>{recipe.title}</title>
             </Head>
-            <BackButton />
             <EnterPageAnimation>
-                {isLoggedIn && (
-                    <>
-                        <Button onClick={() => setIsEditing.toggle()}>Edytuj</Button>
-                        <RemoveButton recipe={recipe} />
-                    </>
-                )}
-                {isEditing ? (
-                    <EditForm initialData={recipe} cancel={setIsEditing.off} />
-                ) : (
-                    <FullCard data={recipe} />
-                )}
+                <Container
+                    maxW="container.md"
+                    shadow="md"
+                    padding="10px"
+                    paddingInline={{ base: "10px", md: "20px" }}
+                    marginBlock="20px"
+                >
+                    <Flex justifyContent="space-between" marginBottom="10px">
+                        <BackButton />
+                        {isLoggedIn && (
+                            <Flex gap="15px">
+                                {!isEditing && (
+                                    <Button onClick={() => setIsEditing.toggle()}>Edytuj</Button>
+                                )}
+                                <RemoveButton recipe={recipe} />
+                            </Flex>
+                        )}
+                    </Flex>
+                    {isEditing ? (
+                        <EditForm initialData={recipe} cancel={setIsEditing.off} />
+                    ) : (
+                        <FullCard data={recipe} />
+                    )}
+                </Container>
             </EnterPageAnimation>
         </>
     );
