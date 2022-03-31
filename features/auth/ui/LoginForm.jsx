@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { Button, Container, FormControl, FormLabel, Heading, Input } from "@chakra-ui/react";
-import { logInWithEmailAndPassword } from "init/firebase";
+import { FIREBASE_AUTH, logInWithEmailAndPassword } from "init/firebase";
 import useMyToast from "shared/hooks/useMyToast";
+import { signInWithEmailAndPassword } from "firebase/auth";
 
 export default function LoginForm() {
     const toast = useMyToast();
@@ -10,8 +11,10 @@ export default function LoginForm() {
     const logIn = async (e) => {
         e.preventDefault();
         if (email && password) {
-            const error = await logInWithEmailAndPassword(email, password);
-            if (error) {
+            try {
+                await signInWithEmailAndPassword(FIREBASE_AUTH, email, password);
+            } catch (err) {
+                console.error(err);
                 toast({
                     status: "error",
                     description: "Podany email lub hasło nie jest prawidłowe!",

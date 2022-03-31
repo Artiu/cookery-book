@@ -1,7 +1,7 @@
 import RecipeForm from "features/recipe/ui/Form";
 import { addDoc, collection } from "firebase/firestore";
 import { ref, uploadBytes } from "firebase/storage";
-import { firestore, storage } from "init/firebase";
+import { FIRESTORE, FIREBASE_STORAGE } from "init/firebase";
 import { useRouter } from "next/router";
 import useMyToast from "shared/hooks/useMyToast";
 import { revalidate } from "shared/revalidate";
@@ -13,9 +13,9 @@ export default function AddForm() {
         const image = data.image;
         delete data.image;
         try {
-            const docRef = await addDoc(collection(firestore, "recipes"), data);
+            const docRef = await addDoc(collection(FIRESTORE, "recipes"), data);
             if (image) {
-                await uploadBytes(ref(storage, `images/${docRef.id}`), image);
+                await uploadBytes(ref(FIREBASE_STORAGE, `images/${docRef.id}`), image);
             }
             await revalidate("/");
             toast({

@@ -13,14 +13,6 @@ const firebaseConfig = {
 };
 
 initializeApp(firebaseConfig);
-export const auth = getAuth();
-export const firestore = getFirestore();
-export const storage = getStorage();
-
-export const logInWithEmailAndPassword = async (email, password) => {
-    try {
-        await signInWithEmailAndPassword(auth, email, password);
-    } catch (err) {
-        return err;
-    }
-};
+export const FIREBASE_AUTH = getAuth();
+export const FIRESTORE = getFirestore();
+export const FIREBASE_STORAGE = getStorage();

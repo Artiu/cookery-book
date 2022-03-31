@@ -11,7 +11,7 @@ import {
 } from "@chakra-ui/react";
 import { deleteDoc, doc } from "firebase/firestore";
 import { deleteObject, ref } from "firebase/storage";
-import { firestore } from "init/firebase";
+import { FIRESTORE } from "init/firebase";
 import { useRouter } from "next/router";
 import { revalidate } from "shared/revalidate";
 import useMyToast from "shared/hooks/useMyToast";
@@ -23,7 +23,7 @@ export default function RemoveButton({ recipe }) {
     const removeRecipe = async () => {
         setIsRemoving(true);
         try {
-            await deleteDoc(doc(firestore, "recipes", recipe.id));
+            await deleteDoc(doc(FIRESTORE, "recipes", recipe.id));
             if (recipe.withImage) {
                 await deleteObject(ref(`images/${recipe.id}`));
             }

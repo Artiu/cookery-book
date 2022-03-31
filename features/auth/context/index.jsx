@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "init/firebase";
+import { FIREBASE_AUTH } from "init/firebase";
 
 const AuthContext = createContext({ isLoggedIn: false });
 
@@ -12,7 +12,7 @@ export default function AuthContextProvider({ children }) {
         return false;
     });
     useEffect(() => {
-        onAuthStateChanged(auth, (user) => {
+        onAuthStateChanged(FIREBASE_AUTH, (user) => {
             if (user) {
                 setIsLoggedIn(true);
             } else {

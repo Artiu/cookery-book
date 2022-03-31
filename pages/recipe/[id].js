@@ -5,7 +5,7 @@ import EditForm from "features/recipe/ui/EditForm";
 import RemoveButton from "features/recipe/ui/RemoveButton";
 import { doc, getDoc } from "firebase/firestore";
 import { getDownloadURL, ref } from "firebase/storage";
-import { firestore, storage } from "init/firebase";
+import { FIRESTORE, FIREBASE_STORAGE } from "init/firebase";
 import Head from "next/head";
 import BackButton from "shared/ui/BackButton";
 import EnterPageAnimation from "shared/ui/EnterPageAnimation";
@@ -49,7 +49,7 @@ export default function RecipePage({ recipe }) {
 }
 
 export async function getStaticProps(context) {
-    const recipe = await getDoc(doc(firestore, "recipes", context.params.id));
+    const recipe = await getDoc(doc(FIRESTORE, "recipes", context.params.id));
     if (!recipe || !recipe.exists()) {
         return {
             redirect: {
@@ -60,7 +60,7 @@ export async function getStaticProps(context) {
     }
     let image = null;
     if (recipe.data().withImage) {
-        image = await getDownloadURL(ref(storage, `images/${recipe.id}`));
+        image = await getDownloadURL(ref(FIREBASE_STORAGE, `images/${recipe.id}`));
     }
     return {
         props: {
