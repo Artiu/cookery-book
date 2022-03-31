@@ -1,6 +1,7 @@
 import {
     Button,
     Container,
+    Flex,
     FormControl,
     FormLabel,
     Image,
@@ -32,9 +33,15 @@ export default function Form({ initialData, cancel, onSubmit }) {
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
-    const addToArray = (name, value) => {
-        if (!value) return;
-        setFormData({ ...formData, [name]: [...formData[name], value] });
+    const addToSteps = () => {
+        if (!step) return;
+        setFormData({ ...formData, steps: [...formData.steps, step] });
+        setStep("");
+    };
+    const addToIngredients = () => {
+        if (!ingredient) return;
+        setFormData({ ...formData, ingredients: [...formData.ingredients, ingredient] });
+        setIngredient("");
     };
     const isFieldsValid = () => {
         if (formData.ingredients.length === 0 || formData.steps.length === 0 || !formData.title) {
@@ -83,7 +90,7 @@ export default function Form({ initialData, cancel, onSubmit }) {
     }, [selectedFile]);
     return (
         <form onSubmit={handleSubmit}>
-            <Container>
+            <Container display="flex" flexDirection="column" gap="8px">
                 <FormControl isInvalid={false} isRequired>
                     <FormLabel>Nazwa przepisu</FormLabel>
                     <Input
@@ -101,10 +108,12 @@ export default function Form({ initialData, cancel, onSubmit }) {
                     hidden={true}
                     ref={fileInputRef}
                 />
-                <Button onClick={() => fileInputRef.current.click()}>
-                    {imagePreview ? "Zmień" : "Dodaj"} zdjęcie
-                </Button>
-                {imagePreview && <Button onClick={removeImage}>Usuń zdjęcie</Button>}
+                <Flex justifyContent="center" gap="5px">
+                    <Button onClick={() => fileInputRef.current.click()}>
+                        {imagePreview ? "Zmień" : "Dodaj"} zdjęcie
+                    </Button>
+                    {imagePreview && <Button onClick={removeImage}>Usuń zdjęcie</Button>}
+                </Flex>
                 <FormControl>
                     <FormLabel>Opis</FormLabel>
                     <Textarea
@@ -120,15 +129,14 @@ export default function Form({ initialData, cancel, onSubmit }) {
                             value={ingredient}
                             onChange={(e) => setIngredient(e.target.value)}
                             required={false}
+                            pr="4.5rem"
                         />
-                        <InputRightElement>
-                            <Button onClick={() => addToArray("ingredients", ingredient)}>
-                                Dodaj
-                            </Button>
+                        <InputRightElement width="4rem">
+                            <Button onClick={addToIngredients}>Dodaj</Button>
                         </InputRightElement>
                     </InputGroup>
-                    <IngredientList ingredients={formData.ingredients} />
                 </FormControl>
+                <IngredientList ingredients={formData.ingredients} />
                 <FormControl isInvalid={false} isRequired>
                     <FormLabel>Kroki</FormLabel>
                     <InputGroup>
@@ -136,13 +144,14 @@ export default function Form({ initialData, cancel, onSubmit }) {
                             value={step}
                             onChange={(e) => setStep(e.target.value)}
                             required={false}
+                            pr="4.5rem"
                         />
-                        <InputRightElement>
-                            <Button onClick={() => addToArray("steps", step)}>Dodaj</Button>
+                        <InputRightElement width="4rem">
+                            <Button onClick={addToSteps}>Dodaj</Button>
                         </InputRightElement>
                     </InputGroup>
-                    <StepList steps={formData.steps} />
                 </FormControl>
+                <StepList steps={formData.steps} />
                 <FormControl>
                     <FormLabel>Podsumowanie</FormLabel>
                     <Textarea

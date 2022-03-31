@@ -1,3 +1,4 @@
+import { Container, Heading } from "@chakra-ui/react";
 import withAuth from "features/auth/HOC/withAuth";
 import AddRecipeForm from "features/recipe/ui/AddForm";
 import Head from "next/head";
@@ -10,7 +11,12 @@ function AddRecipePage() {
                 <title>Dodaj przepis</title>
             </Head>
             <EnterPageAnimation>
-                <AddRecipeForm />
+                <Container paddingBottom="20px" marginBottom="30px" shadow="xl">
+                    <Heading textAlign="center" paddingBlock="20px">
+                        Dodaj przepis
+                    </Heading>
+                    <AddRecipeForm />
+                </Container>
             </EnterPageAnimation>
         </>
     );

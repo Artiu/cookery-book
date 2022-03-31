@@ -6,7 +6,11 @@ function MyApp({ Component, pageProps }) {
     return (
         <ChakraProvider>
             <AuthContextProvider>
-                <AnimatePresence exitBeforeEnter initial={false}>
+                <AnimatePresence
+                    exitBeforeEnter
+                    initial={false}
+                    onExitComplete={() => window.scrollTo(0, 0)}
+                >
                     <Component {...pageProps} />
                 </AnimatePresence>
             </AuthContextProvider>

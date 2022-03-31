@@ -5,10 +5,13 @@ import { auth } from "init/firebase";
 const AuthContext = createContext({ isLoggedIn: false });
 
 export default function AuthContextProvider({ children }) {
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [isLoggedIn, setIsLoggedIn] = useState(() => {
+        if (typeof window !== "undefined") {
+            return localStorage.getItem("wasLoggedIn") === "true";
+        }
+        return false;
+    });
     useEffect(() => {
-        const wasLoggedIn = localStorage.getItem("wasLoggedIn");
-        setIsLoggedIn(wasLoggedIn === "true");
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 setIsLoggedIn(true);

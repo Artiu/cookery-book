@@ -1,11 +1,11 @@
-import { List, ListItem } from "@chakra-ui/react";
+import { UnorderedList, ListItem } from "@chakra-ui/react";
 
 export default function IngredientList({ ingredients }) {
     return (
-        <List>
+        <UnorderedList>
             {ingredients.map((ingredient, index) => (
                 <ListItem key={index}>{ingredient}</ListItem>
             ))}
-        </List>
+        </UnorderedList>
     );
 }

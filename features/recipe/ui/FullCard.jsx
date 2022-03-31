@@ -4,7 +4,7 @@ import StepList from "features/recipe/ui/StepList";
 
 export default function FullCard({ data }) {
     return (
-        <Box maxW="md">
+        <Box shadow="md">
             {data.image && <Image src={data.image} alt={`${data.title} wygląd`} />}
             <Heading>{data.title}</Heading>
             {data.description && <Text>{data.description}</Text>}
