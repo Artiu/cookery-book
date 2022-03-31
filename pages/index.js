@@ -34,6 +34,7 @@ export default function Home({ recipes }) {
                         value={query}
                         onChange={(e) => setQuery(e.target.value)}
                         width={{ base: "100%", md: "50%" }}
+                        backgroundColor="white"
                     />
                     {isLoggedIn && (
                         <Box justifySelf="flex-end">

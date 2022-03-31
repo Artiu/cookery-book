@@ -25,6 +25,7 @@ export default function RecipePage({ recipe }) {
                     padding="10px"
                     paddingInline={{ base: "10px", md: "20px" }}
                     marginBlock="20px"
+                    backgroundColor="white"
                 >
                     <Flex justifyContent="space-between" marginBottom="10px">
                         <BackButton />

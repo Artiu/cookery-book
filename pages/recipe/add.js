@@ -17,6 +17,7 @@ function AddRecipePage() {
                     marginTop="15px"
                     marginBottom="30px"
                     shadow="xl"
+                    backgroundColor="white"
                 >
                     <Heading textAlign="center" paddingBlock="20px" as="h1">
                         Dodaj przepis

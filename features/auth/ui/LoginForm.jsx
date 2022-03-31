@@ -30,6 +30,7 @@ export default function LoginForm() {
                 gap="10px"
                 shadow="lg"
                 paddingBlock="20px"
+                backgroundColor="white"
             >
                 <Heading textAlign="center" as="h1">
                     Zaloguj się

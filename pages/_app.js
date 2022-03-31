@@ -1,10 +1,21 @@
-import { ChakraProvider } from "@chakra-ui/react";
+import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 import AuthContextProvider from "features/auth/context";
 import { AnimatePresence } from "framer-motion";
+import { mode } from "@chakra-ui/theme-tools";
+
+const theme = extendTheme({
+    styles: {
+        global: (props) => ({
+            body: {
+                bg: mode("cyan.50", "teal.100")(props),
+            },
+        }),
+    },
+});
 
 function MyApp({ Component, pageProps }) {
     return (
-        <ChakraProvider>
+        <ChakraProvider theme={theme}>
             <AuthContextProvider>
                 <AnimatePresence
                     exitBeforeEnter

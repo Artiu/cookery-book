@@ -11,6 +11,7 @@ export default function ShortCard({ data }) {
             alignItems="center"
             gap="5px"
             shadow="md"
+            backgroundColor="white"
         >
             {data.image && (
                 <Image
@@ -34,7 +35,7 @@ export default function ShortCard({ data }) {
                     </Text>
                 </Box>
                 <NextLink href={`/recipe/${data.id}`} passHref>
-                    <Button as="a" borderRadius="none">
+                    <Button as="a" borderRadius="none" _focus={{}}>
                         Zobacz cały przepis
                     </Button>
                 </NextLink>
