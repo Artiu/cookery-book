@@ -17,6 +17,7 @@ export default function ShortCard({ data }) {
                     src={data.image}
                     alt={`${data.title} wygląd`}
                     width={{ base: "30%", lg: "100%" }}
+                    loading="lazy"
                 />
             )}
             <Flex direction="column" justifyItems="space-between" height="100%">
