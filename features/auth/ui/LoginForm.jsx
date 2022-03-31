@@ -1,46 +1,47 @@
 import { useState } from "react";
-import {
-    Button,
-    Center,
-    Container,
-    FormControl,
-    FormErrorMessage,
-    FormLabel,
-    Input,
-} from "@chakra-ui/react";
+import { Button, Container, FormControl, FormLabel, Heading, Input } from "@chakra-ui/react";
 import { logInWithEmailAndPassword } from "init/firebase";
+import useMyToast from "shared/hooks/useMyToast";
 
 export default function LoginForm() {
+    const toast = useMyToast();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [showError, setShowError] = useState(false);
     const logIn = async (e) => {
         e.preventDefault();
         if (email && password) {
             const error = await logInWithEmailAndPassword(email, password);
             if (error) {
-                setShowError(true);
+                toast({
+                    status: "error",
+                    description: "Podany email lub hasło nie jest prawidłowe!",
+                });
             }
         }
     };
     return (
-        <form onSubmit={logIn}>
-            <Container>
-                <Center>Zaloguj się</Center>
+        <form onSubmit={logIn} style={{ width: "fitContent" }}>
+            <Container
+                display="flex"
+                flexDirection="column"
+                gap="10px"
+                shadow="lg"
+                paddingBlock="20px"
+            >
+                <Heading textAlign="center" as="h1">
+                    Zaloguj się
+                </Heading>
                 <FormControl>
                     <FormLabel>Email</FormLabel>
                     <Input value={email} onChange={(e) => setEmail(e.target.value)} />
                 </FormControl>
                 <FormControl>
-                    <FormLabel>Password</FormLabel>
+                    <FormLabel>Hasło</FormLabel>
                     <Input
                         type="password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                     />
-                </FormControl>
-                <FormControl isInvalid={showError}>
-                    <FormErrorMessage>Email lub hasło jest nieprawidłowy!</FormErrorMessage>
                 </FormControl>
                 <Button type="submit">Zaloguj się</Button>
             </Container>

@@ -12,7 +12,7 @@ function AddRecipePage() {
             </Head>
             <EnterPageAnimation>
                 <Container paddingBottom="20px" marginBottom="30px" shadow="xl">
-                    <Heading textAlign="center" paddingBlock="20px">
+                    <Heading textAlign="center" paddingBlock="20px" as="h1">
                         Dodaj przepis
                     </Heading>
                     <AddRecipeForm />

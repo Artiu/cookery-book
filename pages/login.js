@@ -1,3 +1,4 @@
+import { Box } from "@chakra-ui/react";
 import withoutAuth from "features/auth/HOC/withoutAuth";
 import LoginForm from "features/auth/ui/LoginForm";
 import Head from "next/head";
@@ -10,7 +11,9 @@ function LoginPage() {
                 <title>Zaloguj się</title>
             </Head>
             <EnterPageAnimation>
-                <LoginForm />
+                <Box marginBlock="40px" marginInline="15px">
+                    <LoginForm />
+                </Box>
             </EnterPageAnimation>
         </>
     );
