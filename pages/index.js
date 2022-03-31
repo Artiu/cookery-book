@@ -1,4 +1,4 @@
-import { Box, Button, Container, Flex, Input } from "@chakra-ui/react";
+import { Box, Button, Container, Flex, Heading, Input } from "@chakra-ui/react";
 import { useAuth } from "features/auth/context";
 import RecipeList from "features/recipe/ui/List";
 import useSearchRecipe from "features/recipe/hooks/useSearchRecipe";
@@ -18,8 +18,11 @@ export default function Home({ recipes }) {
                 <title>Przepisy Madzi</title>
             </Head>
             <Container maxW="container.xl">
+                <Heading textAlign="center" as="h1" paddingBottom="20px" paddingTop="10px">
+                    Przepisy Madzi
+                </Heading>
                 <Flex
-                    direction={{ base: "column-reverse", md: "row" }}
+                    direction={{ base: "column", md: "row" }}
                     justifyContent="center"
                     alignItems="center"
                     columnGap="20px"

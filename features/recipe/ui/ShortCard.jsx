@@ -4,11 +4,11 @@ import NextLink from "next/link";
 export default function ShortCard({ data }) {
     return (
         <Flex
-            width={{ base: "100%", lg: "calc(25% - 20px)" }}
+            width={{ base: "100%", md: "calc(50% - 20px)", lg: "calc(100% / 3 - 20px)" }}
             borderRadius="10px"
             overflow="hidden"
-            direction={{ base: "row", lg: "column" }}
-            alignItems={{ base: "normal", lg: "center" }}
+            direction="column"
+            alignItems="center"
             gap="5px"
             shadow="md"
         >
@@ -20,13 +20,23 @@ export default function ShortCard({ data }) {
                     loading="lazy"
                 />
             )}
-            <Flex direction="column" justifyItems="space-between" height="100%">
-                <Box flex="1">
+            <Flex
+                direction="column"
+                justifyItems="space-between"
+                width="100%"
+                height="100%"
+                gap="10px"
+            >
+                <Box flex="1" paddingInline="10px">
                     <Heading textAlign="center">{data.title}</Heading>
-                    <Text>{data.description}</Text>
+                    <Text textAlign="justify" marginTop="5px">
+                        {data.description}
+                    </Text>
                 </Box>
                 <NextLink href={`/recipe/${data.id}`} passHref>
-                    <Button as="a">Zobacz cały przepis</Button>
+                    <Button as="a" borderRadius="none">
+                        Zobacz cały przepis
+                    </Button>
                 </NextLink>
             </Flex>
         </Flex>
