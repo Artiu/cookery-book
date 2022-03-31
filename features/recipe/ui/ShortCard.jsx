@@ -1,15 +1,14 @@
-import { Box, Button, Flex, Heading, Image, Text, useMediaQuery } from "@chakra-ui/react";
+import { Box, Button, Flex, Heading, Image, Text } from "@chakra-ui/react";
 import NextLink from "next/link";
 
 export default function ShortCard({ data }) {
-    const [isHigherThan1000] = useMediaQuery("(min-width: 1000px)");
     return (
         <Flex
-            width={isHigherThan1000 ? "calc(25% - 20px)" : "100%"}
+            width={{ base: "100%", lg: "calc(25% - 20px)" }}
             borderRadius="10px"
             overflow="hidden"
-            direction={isHigherThan1000 ? "column" : "row"}
-            alignItems={isHigherThan1000 ? "center" : "normal"}
+            direction={{ base: "row", lg: "column" }}
+            alignItems={{ base: "normal", lg: "center" }}
             gap="5px"
             shadow="md"
         >
@@ -17,7 +16,7 @@ export default function ShortCard({ data }) {
                 <Image
                     src={data.image}
                     alt={`${data.title} wygląd`}
-                    width={isHigherThan1000 ? "100%" : "30%"}
+                    width={{ base: "30%", lg: "100%" }}
                 />
             )}
             <Flex direction="column" justifyItems="space-between">
