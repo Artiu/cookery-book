@@ -1,6 +1,7 @@
 import withoutAuth from "features/auth/HOC/withoutAuth";
 import LoginForm from "features/auth/ui/LoginForm";
 import Head from "next/head";
+import EnterPageAnimation from "shared/ui/EnterPageAnimation";
 
 function LoginPage() {
     return (
@@ -8,7 +9,9 @@ function LoginPage() {
             <Head>
                 <title>Zaloguj się</title>
             </Head>
-            <LoginForm />
+            <EnterPageAnimation>
+                <LoginForm />
+            </EnterPageAnimation>
         </>
     );
 }

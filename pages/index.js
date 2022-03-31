@@ -1,4 +1,4 @@
-import { Button, Container, Input } from "@chakra-ui/react";
+import { Box, Button, Container, Flex, Input } from "@chakra-ui/react";
 import { useAuth } from "features/auth/context";
 import RecipeList from "features/recipe/ui/List";
 import useSearchRecipe from "features/recipe/hooks/useSearchRecipe";
@@ -7,6 +7,7 @@ import { getDownloadURL, ref } from "firebase/storage";
 import { firestore, storage } from "init/firebase";
 import Head from "next/head";
 import Link from "next/link";
+import EnterPageAnimation from "shared/ui/EnterPageAnimation";
 
 export default function Home({ recipes }) {
     const { query, setQuery, filteredList } = useSearchRecipe(recipes);
@@ -16,14 +17,32 @@ export default function Home({ recipes }) {
             <Head>
                 <title>Przepisy Madzi</title>
             </Head>
-            {isLoggedIn && (
-                <Link href="/recipe/add" passHref>
-                    <Button as="a">Dodaj przepis</Button>
-                </Link>
-            )}
-            <Input value={query} onChange={(e) => setQuery(e.target.value)} />
             <Container maxW="container.xl">
-                <RecipeList recipes={filteredList} />
+                <Flex
+                    direction={{ base: "column-reverse", md: "row" }}
+                    justifyContent="center"
+                    alignItems="center"
+                    columnGap="20px"
+                    rowGap="10px"
+                    marginBottom="30px"
+                >
+                    <Input
+                        placeholder="Znajdź przepis..."
+                        value={query}
+                        onChange={(e) => setQuery(e.target.value)}
+                        width={{ base: "100%", md: "50%" }}
+                    />
+                    {isLoggedIn && (
+                        <Box justifySelf="flex-end">
+                            <Link href="/recipe/add" passHref>
+                                <Button as="a">Dodaj przepis</Button>
+                            </Link>
+                        </Box>
+                    )}
+                </Flex>
+                <EnterPageAnimation>
+                    <RecipeList recipes={filteredList} />
+                </EnterPageAnimation>
             </Container>
         </>
     );

@@ -8,6 +8,7 @@ import { getDownloadURL, ref } from "firebase/storage";
 import { firestore, storage } from "init/firebase";
 import Head from "next/head";
 import BackButton from "shared/ui/BackButton";
+import EnterPageAnimation from "shared/ui/EnterPageAnimation";
 
 export default function RecipePage({ recipe }) {
     const [isEditing, setIsEditing] = useBoolean();
@@ -18,17 +19,19 @@ export default function RecipePage({ recipe }) {
                 <title>{recipe.title}</title>
             </Head>
             <BackButton />
-            {isLoggedIn && (
-                <>
-                    <Button onClick={() => setIsEditing.toggle()}>Edytuj</Button>
-                    <RemoveButton recipe={recipe} />
-                </>
-            )}
-            {isEditing ? (
-                <EditForm initialData={recipe} cancel={setIsEditing.off} />
-            ) : (
-                <FullCard data={recipe} />
-            )}
+            <EnterPageAnimation>
+                {isLoggedIn && (
+                    <>
+                        <Button onClick={() => setIsEditing.toggle()}>Edytuj</Button>
+                        <RemoveButton recipe={recipe} />
+                    </>
+                )}
+                {isEditing ? (
+                    <EditForm initialData={recipe} cancel={setIsEditing.off} />
+                ) : (
+                    <FullCard data={recipe} />
+                )}
+            </EnterPageAnimation>
         </>
     );
 }

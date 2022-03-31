@@ -19,15 +19,13 @@ export default function ShortCard({ data }) {
                     width={{ base: "30%", lg: "100%" }}
                 />
             )}
-            <Flex direction="column" justifyItems="space-between">
-                <Box>
+            <Flex direction="column" justifyItems="space-between" height="100%">
+                <Box flex="1">
                     <Heading textAlign="center">{data.title}</Heading>
                     <Text>{data.description}</Text>
                 </Box>
                 <NextLink href={`/recipe/${data.id}`} passHref>
-                    <Button as="a" width="full" alignSelf="flex-end">
-                        Zobacz cały przepis
-                    </Button>
+                    <Button as="a">Zobacz cały przepis</Button>
                 </NextLink>
             </Flex>
         </Flex>

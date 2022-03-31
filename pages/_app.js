@@ -1,11 +1,14 @@
 import { ChakraProvider } from "@chakra-ui/react";
 import AuthContextProvider from "features/auth/context";
+import { AnimatePresence } from "framer-motion";
 
 function MyApp({ Component, pageProps }) {
     return (
         <ChakraProvider>
             <AuthContextProvider>
-                <Component {...pageProps} />
+                <AnimatePresence exitBeforeEnter initial={false}>
+                    <Component {...pageProps} />
+                </AnimatePresence>
             </AuthContextProvider>
         </ChakraProvider>
     );
