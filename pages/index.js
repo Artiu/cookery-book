@@ -17,7 +17,7 @@ export default function Home({ recipes }) {
             <Head>
                 <title>Przepisy Madzi</title>
             </Head>
-            <Container maxW="container.xl">
+            <Container maxW="container.xl" paddingBottom="20px">
                 <Heading textAlign="center" as="h1" paddingBottom="20px" paddingTop="10px">
                     Przepisy Madzi
                 </Heading>
@@ -59,7 +59,11 @@ export async function getStaticProps() {
             const recipeData = recipe.data();
             let image = null;
             if (recipeData.withImage) {
-                image = await getDownloadURL(ref(FIREBASE_STORAGE, `images/${recipe.id}`));
+                try {
+                    image = await getDownloadURL(ref(FIREBASE_STORAGE, `images/${recipe.id}`));
+                } catch {
+                    recipeData.withImage = false;
+                }
             }
             return { ...recipeData, id: recipe.id, image };
         })

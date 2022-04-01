@@ -1,6 +1,6 @@
 import RecipeForm from "features/recipe/ui/Form";
 import { doc, updateDoc } from "firebase/firestore";
-import { deleteObject, ref, uploadBytes } from "firebase/storage";
+import { deleteObject, ref, uploadBytes, uploadString } from "firebase/storage";
 import { FIRESTORE, FIREBASE_STORAGE } from "init/firebase";
 import { useRouter } from "next/router";
 import useMyToast from "shared/hooks/useMyToast";
@@ -15,8 +15,12 @@ export default function EditForm({ cancel, initialData }) {
             if (!newData.withImage) {
                 await deleteObject(ref(FIREBASE_STORAGE, `images/${initialData.id}`));
             }
-            if (newData.image && typeof newData.image === "object") {
-                await uploadBytes(ref(FIREBASE_STORAGE, `images/${initialData.id}`), newData.image);
+            if (newData.image && !newData.image.startsWith("https://")) {
+                await uploadString(
+                    ref(FIREBASE_STORAGE, `images/${initialData.id}`),
+                    newData.image,
+                    "data_url"
+                );
             }
             delete newData.image;
             const refToOldData = doc(FIRESTORE, "recipes", initialData.id);

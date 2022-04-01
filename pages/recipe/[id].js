@@ -59,14 +59,19 @@ export async function getStaticProps(context) {
             },
         };
     }
+    const recipeData = recipe.data();
     let image = null;
-    if (recipe.data().withImage) {
-        image = await getDownloadURL(ref(FIREBASE_STORAGE, `images/${recipe.id}`));
+    if (recipeData.withImage) {
+        try {
+            image = await getDownloadURL(ref(FIREBASE_STORAGE, `images/${recipe.id}`));
+        } catch {
+            recipeData.withImage = false;
+        }
     }
     return {
         props: {
             recipe: {
-                ...recipe.data(),
+                ...recipeData,
                 image,
                 id: recipe.id,
             },

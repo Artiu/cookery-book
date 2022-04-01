@@ -11,6 +11,7 @@ import {
     Textarea,
 } from "@chakra-ui/react";
 import { useState, useEffect, useRef } from "react";
+import AvatarEditor from "react-avatar-editor";
 import IngredientList from "./IngredientList";
 import StepList from "./StepList";
 
@@ -54,9 +55,10 @@ export default function Form({ initialData, cancel, onSubmit }) {
         if (isFieldsValid()) {
             setIsSubmitting(true);
             if (selectedFile) {
+                const imageData = imageEditorRef.current.getImage().toDataURL();
                 await onSubmit({
                     ...formData,
-                    image: selectedFile,
+                    image: imageData,
                     withImage: Boolean(imagePreview),
                 });
             } else {
@@ -69,6 +71,7 @@ export default function Form({ initialData, cancel, onSubmit }) {
     const [imagePreview, setImagePreview] = useState(initialData?.image);
     const [selectedFile, setSelectedFile] = useState(null);
     const fileInputRef = useRef();
+    const imageEditorRef = useRef();
 
     const handleChangeImage = (e) => {
         const [file] = e.target.files;
@@ -100,7 +103,15 @@ export default function Form({ initialData, cancel, onSubmit }) {
                         required={false}
                     />
                 </FormControl>
-                {imagePreview && <Image src={imagePreview} alt="Obraz potrawy" />}
+                {imagePreview && (
+                    <AvatarEditor
+                        image={imagePreview}
+                        width={720}
+                        height={380}
+                        border={0}
+                        ref={imageEditorRef}
+                    />
+                )}
                 <Input
                     type="file"
                     onChange={handleChangeImage}

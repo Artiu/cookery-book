@@ -11,13 +11,13 @@ export default function ShortCard({ data }) {
             alignItems="center"
             gap="5px"
             shadow="md"
-            backgroundColor="white"
+            backgroundColor="whiteAlpha.900"
         >
             {data.image && (
                 <Image
                     src={data.image}
                     alt={`${data.title} wygląd`}
-                    width={{ base: "30%", lg: "100%" }}
+                    height="200px"
                     loading="lazy"
                 />
             )}
