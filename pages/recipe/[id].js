@@ -6,18 +6,20 @@ import RemoveButton from "features/recipe/ui/RemoveButton";
 import { doc, getDoc } from "firebase/firestore";
 import { getDownloadURL, ref } from "firebase/storage";
 import { FIRESTORE, FIREBASE_STORAGE } from "init/firebase";
-import Head from "next/head";
 import BackButton from "shared/ui/BackButton";
 import EnterPageAnimation from "shared/ui/EnterPageAnimation";
+import HeadComponent from "shared/ui/NextHead";
 
 export default function RecipePage({ recipe }) {
     const [isEditing, setIsEditing] = useBoolean();
     const { isLoggedIn } = useAuth();
     return (
         <>
-            <Head>
-                <title>{recipe.title}</title>
-            </Head>
+            <HeadComponent
+                title={recipe.title}
+                description={recipe.description}
+                route={`/recipe/${recipe.id}`}
+            />
             <EnterPageAnimation>
                 <Container
                     maxW="container.md"

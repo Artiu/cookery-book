@@ -1,7 +1,6 @@
-import { CloseButton, Container, Heading } from "@chakra-ui/react";
+import { CloseButton, Heading } from "@chakra-ui/react";
 import Head from "next/head";
 import Link from "next/link";
-import BackButton from "shared/ui/BackButton";
 
 export default function Page404() {
     return (

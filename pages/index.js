@@ -8,15 +8,17 @@ import { FIRESTORE, FIREBASE_STORAGE } from "init/firebase";
 import Head from "next/head";
 import Link from "next/link";
 import EnterPageAnimation from "shared/ui/EnterPageAnimation";
+import HeadComponent from "shared/ui/NextHead";
 
 export default function Home({ recipes }) {
     const { query, setQuery, filteredList } = useSearchRecipe(recipes);
     const { isLoggedIn } = useAuth();
     return (
         <>
-            <Head>
-                <title>Przepisy Madzi</title>
-            </Head>
+            <HeadComponent
+                title="Przepisy Madzi"
+                description="Możesz tutaj znaleźć niesamowite inspiracje dla swoich dań kulinarnych"
+            />
             <Container maxW="container.xl" paddingBottom="20px">
                 <Heading textAlign="center" as="h1" paddingBottom="20px" paddingTop="10px">
                     Przepisy Madzi
