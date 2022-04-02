@@ -3,12 +3,13 @@ import { useAuth } from "features/auth/context";
 import FullCard from "features/recipe/ui/FullCard";
 import EditForm from "features/recipe/ui/EditForm";
 import RemoveButton from "features/recipe/ui/RemoveButton";
-import { doc, getDoc } from "firebase/firestore";
+import { doc, getDoc, Timestamp } from "firebase/firestore";
 import { getDownloadURL, ref } from "firebase/storage";
 import { FIRESTORE, FIREBASE_STORAGE } from "init/firebase";
 import BackButton from "shared/ui/BackButton";
 import EnterPageAnimation from "shared/ui/EnterPageAnimation";
 import HeadComponent from "shared/ui/NextHead";
+import { convertTimestampToDateString } from "shared/utils/convertTimestampToDateString";
 
 export default function RecipePage({ recipe }) {
     const [isEditing, setIsEditing] = useBoolean();
@@ -63,6 +64,8 @@ export async function getStaticProps(context) {
         };
     }
     const recipeData = recipe.data();
+    recipeData.dateString = convertTimestampToDateString(recipeData.timestamp);
+    delete recipeData.timestamp;
     let image = null;
     if (recipeData.withImage) {
         try {

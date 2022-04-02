@@ -1,5 +1,5 @@
 import RecipeForm from "features/recipe/ui/Form";
-import { addDoc, collection } from "firebase/firestore";
+import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { ref, uploadBytes, uploadString } from "firebase/storage";
 import { FIRESTORE, FIREBASE_STORAGE } from "init/firebase";
 import { useRouter } from "next/router";
@@ -13,7 +13,10 @@ export default function AddForm() {
         const image = data.image;
         delete data.image;
         try {
-            const docRef = await addDoc(collection(FIRESTORE, "recipes"), data);
+            const docRef = await addDoc(collection(FIRESTORE, "recipes"), {
+                ...data,
+                timestamp: serverTimestamp(),
+            });
             if (image) {
                 try {
                     await uploadString(

@@ -20,6 +20,9 @@ export default function FullCard({ data }) {
                     <Text textAlign="justify">{data.conclusion}</Text>
                 </>
             )}
+            <Text color="gray.500" fontSize="sm">
+                Ostatnia modyfikacja: {data.dateString}
+            </Text>
         </Flex>
     );
 }

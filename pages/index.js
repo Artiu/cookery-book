@@ -2,13 +2,14 @@ import { Box, Button, Container, Flex, Heading, Input } from "@chakra-ui/react";
 import { useAuth } from "features/auth/context";
 import RecipeList from "features/recipe/ui/List";
 import useSearchRecipe from "features/recipe/hooks/useSearchRecipe";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, orderBy, query, Timestamp } from "firebase/firestore";
 import { getDownloadURL, ref } from "firebase/storage";
 import { FIRESTORE, FIREBASE_STORAGE } from "init/firebase";
 import Head from "next/head";
 import Link from "next/link";
 import EnterPageAnimation from "shared/ui/EnterPageAnimation";
 import HeadComponent from "shared/ui/NextHead";
+import { convertTimestampToDateString } from "shared/utils/convertTimestampToDateString";
 
 export default function Home({ recipes }) {
     const { query, setQuery, filteredList } = useSearchRecipe(recipes);
@@ -55,10 +56,14 @@ export default function Home({ recipes }) {
 }
 
 export async function getStaticProps() {
-    const recipes = await getDocs(collection(FIRESTORE, "recipes"));
+    const recipes = await getDocs(
+        query(collection(FIRESTORE, "recipes"), orderBy("timestamp", "desc"))
+    );
     const transformedRecipes = await Promise.all(
         recipes.docs.map(async (recipe) => {
             const recipeData = recipe.data();
+            recipeData.dateString = convertTimestampToDateString(recipeData.timestamp);
+            delete recipeData.timestamp;
             let image = null;
             if (recipeData.withImage) {
                 try {

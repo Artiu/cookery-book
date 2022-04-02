@@ -35,6 +35,9 @@ export default function ShortCard({ data }) {
                     <Text textAlign="justify" marginTop="5px">
                         {data.description}
                     </Text>
+                    <Text color="gray.500" fontSize="sm" marginTop="7px">
+                        Ostatnia modyfikacja: {data.dateString}
+                    </Text>
                 </Box>
                 <NextLink href={`/recipe/${data.id}`} passHref>
                     <Button as="a" borderRadius="none" _focus={{}}>

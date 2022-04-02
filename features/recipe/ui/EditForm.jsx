@@ -1,5 +1,5 @@
 import RecipeForm from "features/recipe/ui/Form";
-import { doc, updateDoc } from "firebase/firestore";
+import { doc, serverTimestamp, updateDoc } from "firebase/firestore";
 import { deleteObject, ref, uploadBytes, uploadString } from "firebase/storage";
 import { FIRESTORE, FIREBASE_STORAGE } from "init/firebase";
 import { useRouter } from "next/router";
@@ -13,7 +13,9 @@ export default function EditForm({ cancel, initialData }) {
         delete newData.id;
         try {
             if (!newData.withImage) {
-                await deleteObject(ref(FIREBASE_STORAGE, `images/${initialData.id}`));
+                try {
+                    await deleteObject(ref(FIREBASE_STORAGE, `images/${initialData.id}`));
+                } catch {}
             }
             if (newData.image && !newData.image.startsWith("https://")) {
                 await uploadString(
@@ -24,11 +26,12 @@ export default function EditForm({ cancel, initialData }) {
             }
             delete newData.image;
             const refToOldData = doc(FIRESTORE, "recipes", initialData.id);
-            await updateDoc(refToOldData, newData);
+            await updateDoc(refToOldData, { ...newData, timestamp: serverTimestamp() });
             await revalidate(`/recipe/${initialData.id}`);
             await revalidate("/");
             toast({ status: "success", description: "Pomyślnie zedytowano przepis!" });
         } catch (err) {
+            console.error(err);
             toast({ status: "error", description: "Coś poszło nie tak!" });
         }
         router.reload();
