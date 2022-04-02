@@ -29,7 +29,9 @@ export default function ShortCard({ data }) {
                 gap="10px"
             >
                 <Box flex="1" paddingInline="10px">
-                    <Heading textAlign="center">{data.title}</Heading>
+                    <Heading textAlign="center" as="h3">
+                        {data.title}
+                    </Heading>
                     <Text textAlign="justify" marginTop="5px">
                         {data.description}
                     </Text>

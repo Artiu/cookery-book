@@ -16,9 +16,10 @@ export default function RecipePage({ recipe }) {
     return (
         <>
             <HeadComponent
-                title={recipe.title}
+                title={"Przepisy Madzi | " + recipe.title}
                 description={recipe.description}
                 route={`/recipe/${recipe.id}`}
+                image={recipe.withImage ? recipe.image : "/logo.png"}
             />
             <EnterPageAnimation>
                 <Container
