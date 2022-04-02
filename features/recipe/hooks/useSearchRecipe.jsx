@@ -2,8 +2,10 @@ import { useState, useEffect } from "react";
 
 export default function useSearchRecipe(list) {
     const [query, setQuery] = useState("");
-    const filteredList = list.filter((item) =>
-        item.title.toLowerCase().includes(query.toLowerCase())
+    const filteredList = list.filter(
+        (item) =>
+            item.title.toLowerCase().includes(query.toLowerCase()) ||
+            item.tags.find((tag) => tag.toLowerCase().includes(query.toLowerCase()))
     );
     useEffect(() => {
         setQuery(sessionStorage.getItem("query") || "");
