@@ -34,6 +34,7 @@ export default function RemoveButton({ recipe }) {
         }
         setIsRemoving(false);
         router.push("/");
+        router.reload();
     };
     const { isOpen, onOpen, onClose } = useDisclosure();
     return (
