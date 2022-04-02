@@ -1,6 +1,6 @@
 import RecipeForm from "features/recipe/ui/Form";
 import { doc, serverTimestamp, updateDoc } from "firebase/firestore";
-import { deleteObject, ref, uploadBytes, uploadString } from "firebase/storage";
+import { deleteObject, ref, uploadString } from "firebase/storage";
 import { FIRESTORE, FIREBASE_STORAGE } from "init/firebase";
 import { useRouter } from "next/router";
 import useMyToast from "shared/hooks/useMyToast";
@@ -11,6 +11,7 @@ export default function EditForm({ cancel, initialData }) {
     const toast = useMyToast();
     const editData = async (newData) => {
         delete newData.id;
+        delete newData.dateString;
         try {
             if (!newData.withImage) {
                 try {
