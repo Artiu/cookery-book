@@ -1,10 +1,8 @@
 import {
     Button,
-    Container,
     Flex,
     FormControl,
     FormLabel,
-    Image,
     Input,
     InputGroup,
     InputRightElement,
@@ -91,9 +89,26 @@ export default function Form({ initialData, cancel, onSubmit }) {
 
         return () => URL.revokeObjectURL(url);
     }, [selectedFile]);
+
+    const containerRef = useRef();
+    const [editorDimensions, setEditorDimensions] = useState({ width: 720, height: 380 });
+    const updateEditorDimensions = () => {
+        const containerWidth = containerRef.current?.clientWidth;
+        if (containerWidth) {
+            setEditorDimensions({ width: containerWidth, height: containerWidth * 0.53 });
+        }
+    };
+    useEffect(() => {
+        updateEditorDimensions();
+        window.addEventListener("resize", updateEditorDimensions);
+        return () => {
+            window.removeEventListener("resize", updateEditorDimensions);
+        };
+    }, []);
+
     return (
         <form onSubmit={handleSubmit}>
-            <Flex direction="column" gap="8px">
+            <Flex direction="column" gap="8px" ref={containerRef}>
                 <FormControl isInvalid={false} isRequired>
                     <FormLabel>Nazwa przepisu</FormLabel>
                     <Input
@@ -106,8 +121,8 @@ export default function Form({ initialData, cancel, onSubmit }) {
                 {imagePreview && (
                     <AvatarEditor
                         image={imagePreview}
-                        width={720}
-                        height={380}
+                        width={editorDimensions.width}
+                        height={editorDimensions.height}
                         border={0}
                         ref={imageEditorRef}
                     />
