@@ -1,6 +1,7 @@
 import { Box, Container, Flex, Heading, Image, Text } from "@chakra-ui/react";
 import IngredientList from "features/recipe/ui/IngredientList";
 import StepList from "features/recipe/ui/StepList";
+import TagList from "./TagList";
 
 export default function FullCard({ data }) {
     return (
@@ -9,6 +10,7 @@ export default function FullCard({ data }) {
             <Heading as="h1" textAlign="center">
                 {data.title}
             </Heading>
+            {data.tags && <TagList tags={data.tags} />}
             {data.description && <Text textAlign="justify">{data.description}</Text>}
             <Heading fontSize="lg">Składniki:</Heading>
             <IngredientList ingredients={data.ingredients} />

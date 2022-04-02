@@ -1,5 +1,6 @@
 import { Box, Button, Flex, Heading, Image, Text } from "@chakra-ui/react";
 import NextLink from "next/link";
+import TagList from "./TagList";
 
 export default function ShortCard({ data }) {
     return (
@@ -28,17 +29,18 @@ export default function ShortCard({ data }) {
                 height="100%"
                 gap="10px"
             >
-                <Box flex="1" paddingInline="10px">
+                <Flex flex="1" direction="column" paddingInline="10px" gap="3px">
                     <Heading textAlign="center" as="h3">
                         {data.title}
                     </Heading>
+                    {data.tags && <TagList tags={data.tags} />}
                     <Text textAlign="justify" marginTop="5px">
                         {data.description}
                     </Text>
-                    <Text color="gray.500" fontSize="sm" marginTop="7px">
+                    <Text color="gray.500" fontSize="sm">
                         Ostatnia modyfikacja: {data.dateString}
                     </Text>
-                </Box>
+                </Flex>
                 <NextLink href={`/recipe/${data.id}`} passHref>
                     <Button as="a" borderRadius="none" _focus={{}}>
                         Zobacz cały przepis

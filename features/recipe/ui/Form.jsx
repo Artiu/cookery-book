@@ -12,12 +12,14 @@ import { useState, useEffect, useRef } from "react";
 import AvatarEditor from "react-avatar-editor";
 import IngredientList from "./IngredientList";
 import StepList from "./StepList";
+import TagList from "./TagList";
 
 const initialState = {
     title: "",
     description: "",
     ingredients: [],
     steps: [],
+    tags: [],
     conclusion: "",
 };
 
@@ -25,12 +27,18 @@ export default function Form({ initialData, cancel, onSubmit }) {
     const [formData, setFormData] = useState(
         initialData ? { ...initialState, ...initialData } : initialState
     );
+    const [isSubmitting, setIsSubmitting] = useState(false);
     const [ingredient, setIngredient] = useState("");
     const [step, setStep] = useState("");
-    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [tag, setTag] = useState("");
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
+    };
+    const addToTags = () => {
+        if (!tag) return;
+        setFormData({ ...formData, tags: [...formData.tags, tag] });
+        setTag("");
     };
     const addToSteps = () => {
         if (!step) return;
@@ -42,6 +50,12 @@ export default function Form({ initialData, cancel, onSubmit }) {
         setFormData({ ...formData, ingredients: [...formData.ingredients, ingredient] });
         setIngredient("");
     };
+    const removeItemFromFormDataArray = (name, value) => {
+        let array = formData[name];
+        array = array.filter((item) => item !== value);
+        setFormData({ ...formData, [name]: array });
+    };
+
     const isFieldsValid = () => {
         if (formData.ingredients.length === 0 || formData.steps.length === 0 || !formData.title) {
             return false;
@@ -118,6 +132,19 @@ export default function Form({ initialData, cancel, onSubmit }) {
                         required={false}
                     />
                 </FormControl>
+                <FormControl>
+                    <FormLabel>Tagi</FormLabel>
+                    <InputGroup>
+                        <Input value={tag} onChange={(e) => setTag(e.target.value)} pr="4.5rem" />
+                        <InputRightElement width="4rem">
+                            <Button onClick={addToTags}>Dodaj</Button>
+                        </InputRightElement>
+                    </InputGroup>
+                </FormControl>
+                <TagList
+                    tags={formData.tags}
+                    onCloseItem={(value) => removeItemFromFormDataArray("tags", value)}
+                />
                 {imagePreview && (
                     <AvatarEditor
                         image={imagePreview}
@@ -162,7 +189,10 @@ export default function Form({ initialData, cancel, onSubmit }) {
                         </InputRightElement>
                     </InputGroup>
                 </FormControl>
-                <IngredientList ingredients={formData.ingredients} />
+                <IngredientList
+                    ingredients={formData.ingredients}
+                    removeItem={(item) => removeItemFromFormDataArray("ingredients", item)}
+                />
                 <FormControl isInvalid={false} isRequired>
                     <FormLabel>Kroki</FormLabel>
                     <InputGroup>
@@ -177,7 +207,10 @@ export default function Form({ initialData, cancel, onSubmit }) {
                         </InputRightElement>
                     </InputGroup>
                 </FormControl>
-                <StepList steps={formData.steps} />
+                <StepList
+                    steps={formData.steps}
+                    removeItem={(item) => removeItemFromFormDataArray("steps", item)}
+                />
                 <FormControl>
                     <FormLabel>Podsumowanie</FormLabel>
                     <Textarea
