@@ -35,21 +35,28 @@ export default function Form({ initialData, cancel, onSubmit }) {
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
+
     const addToTags = () => {
         if (!tag) return;
         setFormData({ ...formData, tags: [...formData.tags, tag] });
         setTag("");
     };
+
     const addToSteps = () => {
         if (!step) return;
         setFormData({ ...formData, steps: [...formData.steps, step] });
         setStep("");
     };
+    const moveSteps = (newSteps) => {
+        setFormData({ ...formData, steps: newSteps });
+    };
+
     const addToIngredients = () => {
         if (!ingredient) return;
         setFormData({ ...formData, ingredients: [...formData.ingredients, ingredient] });
         setIngredient("");
     };
+
     const removeItemFromFormDataArray = (name, value) => {
         let array = formData[name];
         array = array.filter((item) => item !== value);
@@ -210,6 +217,7 @@ export default function Form({ initialData, cancel, onSubmit }) {
                 <StepList
                     steps={formData.steps}
                     removeItem={(item) => removeItemFromFormDataArray("steps", item)}
+                    moveItem={moveSteps}
                 />
                 <FormControl>
                     <FormLabel>Podsumowanie</FormLabel>
