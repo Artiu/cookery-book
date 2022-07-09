@@ -1,23 +1,13 @@
-import { CloseButton, Flex } from "@chakra-ui/react";
-import { Reorder } from "framer-motion";
+import { CloseButton, Flex, ListItem, OrderedList } from "@chakra-ui/react";
 
-export default function StepList({ steps, removeItem, moveItem }) {
+export default function StepList({ steps, removeItem }) {
     return (
-        <Reorder.Group
-            as="ol"
-            axis="y"
-            values={steps}
-            onReorder={moveItem}
-            style={{ paddingInline: "1rem", overflow: "hidden" }}
-        >
-            {steps.map((step) => (
-                <Reorder.Item value={step} key={step}>
-                    <Flex justifyContent="space-between">
-                        {step}
-                        {removeItem && <CloseButton size="sm" onClick={() => removeItem(step)} />}
-                    </Flex>
-                </Reorder.Item>
+        <OrderedList>
+            {steps.map((step, index) => (
+                <ListItem key={index}>
+                    <Flex justifyContent="space-between">{step}</Flex>
+                </ListItem>
             ))}
-        </Reorder.Group>
+        </OrderedList>
     );
 }

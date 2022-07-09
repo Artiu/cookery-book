@@ -1,4 +1,4 @@
-import { Box, Container, Flex, Heading, Image, Text } from "@chakra-ui/react";
+import { Flex, Heading, Image, Text } from "@chakra-ui/react";
 import IngredientList from "features/recipe/ui/IngredientList";
 import StepList from "features/recipe/ui/StepList";
 import TagList from "./TagList";

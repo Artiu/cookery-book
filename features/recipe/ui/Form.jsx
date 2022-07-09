@@ -11,7 +11,7 @@ import {
 import { useState, useEffect, useRef } from "react";
 import AvatarEditor from "react-avatar-editor";
 import IngredientList from "./IngredientList";
-import StepList from "./StepList";
+import MovableStepList from "./MovableStepList";
 import TagList from "./TagList";
 
 const initialState = {
@@ -214,7 +214,7 @@ export default function Form({ initialData, cancel, onSubmit }) {
                         </InputRightElement>
                     </InputGroup>
                 </FormControl>
-                <StepList
+                <MovableStepList
                     steps={formData.steps}
                     removeItem={(item) => removeItemFromFormDataArray("steps", item)}
                     moveItem={moveSteps}
