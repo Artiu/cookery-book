@@ -25,7 +25,7 @@ export default function RemoveButton({ recipe }) {
 		try {
 			await deleteDoc(doc(FIRESTORE, "recipes", recipe.id));
 			if (recipe.withImage) {
-				await deleteObject(ref(FIREBASE_STORAGE, `images/${recipe.id}`));
+				await deleteObject(ref(FIREBASE_STORAGE, `images/${recipe.id}.webp`));
 			}
 			await revalidate(`/recipe/${recipe.id}`);
 			await revalidate("/");
